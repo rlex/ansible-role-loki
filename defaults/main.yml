@@ -1,0 +1,52 @@
+loki_version: 1.4.1
+loki_system_user: loki
+loki_system_group: loki
+loki_server_http_listen_port: 3100
+#loki_folders: []
+loki_schema_config:
+  - from: 2018-04-15
+    store: boltdb
+    object_store: filesystem
+    schema: v11
+    index:
+      prefix: index_
+      period: 168h
+
+loki_storage_config:
+  boltdb:
+    directory: /tmp/loki/index
+  filesystem:
+    directory: /tmp/loki/chunks
+
+loki_ingester:
+  lifecycler:
+    address: 127.0.0.1
+    ring:
+      kvstore:
+        store: inmemory
+      replication_factor: 1
+    final_sleep: 0s
+  chunk_idle_period: 5m
+  chunk_retain_period: 30s
+
+loki_limits_config:
+  enforce_metric_name: false
+  reject_old_samples: true
+  reject_old_samples_max_age: 168h
+
+loki_chunk_store_config:
+  max_look_back_period: 0s
+
+loki_table_manager:
+  chunk_tables_provisioning:
+    inactive_read_throughput: 0
+    inactive_write_throughput: 0
+    provisioned_read_throughput: 0
+    provisioned_write_throughput: 0
+  index_tables_provisioning:
+    inactive_read_throughput: 0
+    inactive_write_throughput: 0
+    provisioned_read_throughput: 0
+    provisioned_write_throughput: 0
+  retention_deletes_enabled: false
+  retention_period: 0

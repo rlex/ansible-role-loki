@@ -1,0 +1,14 @@
+[Unit]
+Description=loki Server
+After=network.target
+After=systemd-user-sessions.service
+After=network-online.target
+
+[Service]
+Type=simple
+Restart=always
+ExecStart=/usr/local/bin/loki -config.file /etc/loki.yml
+WorkingDirectory=/usr/local/bin
+
+[Install]
+WantedBy=multi-user.target

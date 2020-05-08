@@ -1,0 +1,24 @@
+#jinja2: trim_blocks: True, lstrip_blocks: True
+auth_enabled: false
+
+server:
+  http_listen_port: {{ loki_server_http_listen_port }}
+
+ingester:
+  {{ loki_ingester | to_nice_yaml(indent=2) | indent(2, False) }}
+
+schema_config:
+  configs:
+  {{ loki_schema_config | to_nice_yaml(indent=2) | indent(2, False) }}
+
+storage_config:
+  {{ loki_storage_config | to_nice_yaml(indent=2) | indent(2, False) }}
+
+limits_config:
+  {{ loki_limits_config | to_nice_yaml(indent=2) | indent(2, False) }}
+
+chunk_store_config:
+  {{ loki_chunk_store_config | to_nice_yaml(indent=2) | indent(2, False) }}
+
+table_manager:
+  {{ loki_table_manager | to_nice_yaml(indent=2) | indent(2, False) }}
