@@ -12,12 +12,12 @@
     group: "{{ loki_system_group }}"
     createhome: false
 
-#- name: "Download loki files"
-#  become: false
-#  get_url:
-#    url: "https://github.com/grafana/loki/releases/download/v{{ loki_version }}/loki-linux-amd64.zip"
-#    dest: "/tmp/"
-#  delegate_to: localhost
+- name: "Download loki files"
+  become: false
+  get_url:
+    url: "https://github.com/grafana/loki/releases/download/v{{ loki_version }}/loki-linux-amd64.zip"
+    dest: "/tmp/"
+  delegate_to: localhost
 
 - name: "Create temporary directory"
   become: false
@@ -36,18 +36,22 @@
   delegate_to: localhost
   check_mode: false
 
-#- name: propagate loki binary
-#  copy:
-#    src: "/tmp/loki-{{loki_version}}-linux-amd64/loki-linux-amd64"
-#    dest: "/usr/local/bin/loki"
-#    mode: 0755
-#    owner: "{{ loki_system_user }}"
-#    group: "{{ loki_system_group }}"
-#  notify:
-#    - restart loki
+- name: propagate loki binary
+  copy:
+    src: "/tmp/loki-{{loki_version}}-linux-amd64/loki-linux-amd64"
+    dest: "/usr/local/bin/loki"
+    mode: 0755
+    owner: "{{ loki_system_user }}"
+    group: "{{ loki_system_group }}"
+  notify:
+    - restart loki
 
-#- name: create folders for loki
-
+- name: pre-create loki folders
+  file:
+    name: "{{ loki_directories }}"
+    state: directory
+    owner: "{{ loki_system_user }}"
+    group: "{{ loki_system_group }}"
 
 - name: configure loki
   template:

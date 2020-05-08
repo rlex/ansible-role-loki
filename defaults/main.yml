@@ -2,7 +2,7 @@ loki_version: 1.4.1
 loki_system_user: loki
 loki_system_group: loki
 loki_server_http_listen_port: 3100
-#loki_folders: []
+loki_directories: []
 loki_schema_config:
   - from: 2018-04-15
     store: boltdb
