@@ -1,6 +1,7 @@
 loki_version: 1.4.1
 loki_system_user: loki
 loki_system_group: loki
+loki_auth_enabled: false
 loki_server_http_listen_port: 3100
 loki_directories: []
 loki_schema_config:

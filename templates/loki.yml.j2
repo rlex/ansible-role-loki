@@ -1,5 +1,5 @@
 #jinja2: trim_blocks: True, lstrip_blocks: True
-auth_enabled: false
+auth_enabled: {{ loki_auth_enabled | bool | lower }}
 
 server:
   http_listen_port: {{ loki_server_http_listen_port }}
