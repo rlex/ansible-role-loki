@@ -1,4 +1,4 @@
-loki_version: 1.4.1
+loki_version: 1.5.0
 loki_system_user: loki
 loki_system_group: loki
 loki_auth_enabled: false
@@ -29,6 +29,7 @@ loki_ingester:
     final_sleep: 0s
   chunk_idle_period: 5m
   chunk_retain_period: 30s
+  max_transfer_retries: 0
 
 loki_limits_config:
   enforce_metric_name: false
@@ -39,15 +40,5 @@ loki_chunk_store_config:
   max_look_back_period: 0s
 
 loki_table_manager:
-  chunk_tables_provisioning:
-    inactive_read_throughput: 0
-    inactive_write_throughput: 0
-    provisioned_read_throughput: 0
-    provisioned_write_throughput: 0
-  index_tables_provisioning:
-    inactive_read_throughput: 0
-    inactive_write_throughput: 0
-    provisioned_read_throughput: 0
-    provisioned_write_throughput: 0
   retention_deletes_enabled: false
-  retention_period: 0
+  retention_period: 0s
