@@ -3,6 +3,7 @@ loki_system_user: loki
 loki_system_group: loki
 loki_auth_enabled: false
 loki_server_http_listen_port: 3100
+loki_server_http_listen_address: localhost
 loki_directories: []
 loki_schema_config:
   - from: 2018-04-15
