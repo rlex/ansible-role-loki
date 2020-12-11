@@ -47,3 +47,5 @@ loki_table_manager:
   retention_period: 0s
 
 loki_distribute_binaries_via_localhost: true
+loki_install_logcli: true
+

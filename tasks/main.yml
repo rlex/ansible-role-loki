@@ -1,9 +1,14 @@
 - set_fact:
     loki_download_base_url: "https://github.com/grafana/loki/releases/download/v{{ loki_version }}"
+    loki_binaries: ["loki"]
 
 - set_fact:
     # possibly overridden in tasks/local_download.yml
     loki_archive_src: "{{ loki_download_base_url }}"
+
+- set_fact:
+    loki_binaries: ["loki", "logcli"]
+  when: loki_install_logcli
 
 - name: create loki system group
   group:
@@ -29,18 +34,9 @@
     include_tasks:
       file: local_download.yml
     when: loki_distribute_binaries_via_localhost
-
-  - name: copy and unzip loki binary
-    unarchive:
-      src: "{{ loki_archive_src }}/loki-linux-amd64.zip"
-      remote_src: yes
-      dest: /usr/local/bin
-      owner: "{{ loki_system_user }}"
-      group: "{{ loki_system_group }}"
-      mode: ug=rx
-    notify: restart loki
-  - name: rename new loki binary
-    command: mv /usr/local/bin/loki-linux-amd64 /usr/local/bin/loki
+    loop: "{{ loki_binaries }}"
+  - include_tasks: install.yml
+    loop: "{{ loki_binaries }}"
   when: current_loki_version.stdout != loki_version
 
 - name: pre-create loki folders

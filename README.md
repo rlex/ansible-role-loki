@@ -27,6 +27,7 @@ This role is compatible with any modern systemd-based distro.
 | loki_query_range                | empty         | YAML with query range settings
 | loki_ruler                      | empty         | YAML with ruler settings
 | loki_alert_rules                | `[]`          | YAML with alerts
+| loki_install_logcli             | `true`        | whether `logcli` shall be installed too            |
 
 ## Settings
 To configure loki with role you just need to supply YAML to each corresponding block. See example configs from loki github repo for examples.   

@@ -1,0 +1,12 @@
+- name: copy and unzip binary
+  unarchive:
+    src: "{{ loki_archive_src }}/{{ item }}-linux-amd64.zip"
+    remote_src: yes
+    dest: /usr/local/bin
+    owner: "{{ loki_system_user }}"
+    group: "{{ loki_system_group }}"
+    mode: ug=rx
+  notify: restart loki
+
+- name: rename new binary
+  command: mv /usr/local/bin/{{ item }}-linux-amd64 /usr/local/bin/{{ item }}

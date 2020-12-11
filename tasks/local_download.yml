@@ -1,14 +1,14 @@
 - name: "Download loki files to localhost"
   become: false
   get_url:
-    url: "{{ loki_download_base_url }}/loki-linux-amd64.zip"
+    url: "{{ loki_download_base_url }}/{{ item }}-linux-amd64.zip"
     dest: "/tmp/"
   delegate_to: localhost
   run_once: true
 
 - name: copy archive to target hosts
   copy:
-    src: /tmp/loki-linux-amd64.zip
+    src: /tmp/{{ item }}-linux-amd64.zip
     dest: /tmp/
 
 - set_fact:
