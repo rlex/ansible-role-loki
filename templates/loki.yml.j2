@@ -8,6 +8,11 @@ server:
 ingester:
   {{ loki_ingester | to_nice_yaml(indent=2) | indent(2, False) }}
 
+{% if loki_compactor is defined %}
+compactor:
+  {{ loki_compactor | to_nice_yaml(indent=2) | indent(2, False) }}
+{% endif %}
+
 schema_config:
   configs:
   {{ loki_schema_config | to_nice_yaml(indent=2) | indent(2, False) }}
@@ -23,3 +28,8 @@ chunk_store_config:
 
 table_manager:
   {{ loki_table_manager | to_nice_yaml(indent=2) | indent(2, False) }}
+
+{% if loki_cache_config is defined %}
+cache_config:
+  {{ loki_cache_config | to_nice_yaml(indent=2) | indent(2, False) }}
+{% endif %}

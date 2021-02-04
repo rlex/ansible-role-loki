@@ -52,6 +52,7 @@
     state: directory
     owner: "{{ loki_system_user }}"
     group: "{{ loki_system_group }}"
+  when: loki_directories|length>0
 
 - name: configure loki
   template:
