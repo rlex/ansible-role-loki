@@ -87,3 +87,11 @@
     mode: 0644
   notify:
     - restart loki
+
+- name: Enable and unmask loki service
+  systemd:
+    daemon_reload: true
+    name: loki
+    state: started
+    enabled: yes
+    masked: no
