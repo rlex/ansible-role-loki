@@ -48,11 +48,25 @@
 
 - name: pre-create loki folders
   file:
-    name: "{{ loki_directories }}"
+    path: "{{ item }}"
     state: directory
     owner: "{{ loki_system_user }}"
     group: "{{ loki_system_group }}"
   when: loki_directories|length>0
+  loop: "{{ loki_directories }}"
+
+#- name: deploy loki alerts
+#  template:
+#    src: "alert.rules.j2"
+#    dest: "{{ loki_alerts_directory }}/ansible_managed.rules"
+#    owner: "{{ loki_system_user }}"
+#    group: "{{ loki_system_group }}"
+#    mode: 0640
+#    validate: "{{ _prometheus_binary_install_dir }}/promtool check rules %s"
+#  when:
+#    - loki_alert_rules != []
+#  notify:
+#    - restart loki
 
 - name: configure loki
   template:

@@ -5,6 +5,11 @@ server:
   http_listen_port: {{ loki_server_http_listen_port }}
   http_listen_address: {{ loki_server_http_listen_address }}
 
+{% if loki_memberlist is defined %}
+memberlist:
+  {{ loki_memberlist | to_nice_yaml(indent=2) | indent(2, False) }}
+{% endif %}
+
 ingester:
   {{ loki_ingester | to_nice_yaml(indent=2) | indent(2, False) }}
 
@@ -29,7 +34,7 @@ chunk_store_config:
 table_manager:
   {{ loki_table_manager | to_nice_yaml(indent=2) | indent(2, False) }}
 
-{% if loki_cache_config is defined %}
-cache_config:
-  {{ loki_cache_config | to_nice_yaml(indent=2) | indent(2, False) }}
+{% if loki_query_range is defined %}
+query_range:
+  {{ loki_query_range | to_nice_yaml(indent=2) | indent(2, False) }}
 {% endif %}
