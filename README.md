@@ -33,7 +33,7 @@ To configure loki with role you just need to supply YAML to each corresponding b
 Default settings are provided to get "proof-of-concept" installation up and running, you can see them in defaults/main.yml  
 Please note that by default loki writes to /tmp/, you will need to adjust loki_storage_config in case you want S3/GCS/other supported storage  
 
-## Alerts
+## Alerts (WIP, not working ATM)
 To use alerts you will need to use loki's ruler. Default setting enables it, with rules stored in /tmp with empty ruleset. Alerts follows prometheus format. Sample alert:
 ```yaml
 loki_alert_rules:
