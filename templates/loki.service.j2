@@ -7,8 +7,14 @@ After=network-online.target
 [Service]
 Type=simple
 Restart=always
+User={{ loki_system_user }}
+Group={{ loki_system_group }}
 ExecStart=/usr/local/bin/loki -config.file /etc/loki.yml {{ loki_arguments | join(' ') }}
 WorkingDirectory=/usr/local/bin
+LimitAS=infinity
+LimitRSS=infinity
+LimitCORE=infinity
+LimitNOFILE=65536
 
 [Install]
 WantedBy=multi-user.target
