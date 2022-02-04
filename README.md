@@ -1,6 +1,6 @@
 Role for managing [loki](https://github.com/grafana/loki)
 
-For possible settings and format look at [example configs](https://github.com/grafana/loki/blob/master/docs/configuration/examples.md)  
+For possible settings and format look at [example configs](https://github.com/grafana/loki/blob/master/docs/sources/configuration/examples.md)  
 This role only installs loki. For promtail, see [this role](https://github.com/patrickjahns/ansible-role-promtail)
 
 ## Compatibility
