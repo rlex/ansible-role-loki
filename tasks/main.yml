@@ -1,3 +1,10 @@
+- set_fact:
+    loki_download_base_url: "https://github.com/grafana/loki/releases/download/v{{ loki_version }}"
+
+- set_fact:
+    # possibly overridden in tasks/local_download.yml
+    loki_archive_src: "{{ loki_download_base_url }}"
+
 - name: create loki system group
   group:
     name: "{{ loki_system_group }}"
@@ -18,20 +25,22 @@
   changed_when: false
 
 - block:
-    - name: download and unzip loki binary
-      unarchive:
-        src: https://github.com/grafana/loki/releases/download/v{{ loki_version }}/loki-linux-amd64.zip
-        remote_src: yes
-        dest: /usr/local/bin
-    - name: rename new loki binary
-      command: mv /usr/local/bin/loki-linux-amd64 /usr/local/bin/loki
-    - name: set loki binary ownership and permissions
-      file:
-        path: /usr/local/bin/loki
-        owner: "{{ loki_system_user }}"
-        group: "{{ loki_system_group }}"
-        mode: ug=rx
-      notify: enable and restart loki
+  - name: download files to localhost
+    include_tasks:
+      file: local_download.yml
+    when: loki_distribute_binaries_via_localhost
+
+  - name: copy and unzip loki binary
+    unarchive:
+      src: "{{ loki_archive_src }}/loki-linux-amd64.zip"
+      remote_src: yes
+      dest: /usr/local/bin
+      owner: "{{ loki_system_user }}"
+      group: "{{ loki_system_group }}"
+      mode: ug=rx
+    notify: restart loki
+  - name: rename new loki binary
+    command: mv /usr/local/bin/loki-linux-amd64 /usr/local/bin/loki
   when: current_loki_version.stdout != loki_version
 
 - name: pre-create loki folders

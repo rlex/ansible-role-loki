@@ -1,0 +1,17 @@
+- name: "Download loki files to localhost"
+  become: false
+  get_url:
+    url: "{{ loki_download_base_url }}/loki-linux-amd64.zip"
+    dest: "/tmp/"
+  delegate_to: localhost
+  run_once: true
+
+- name: copy archive to target hosts
+  copy:
+    src: /tmp/loki-linux-amd64.zip
+    dest: /tmp/
+
+- set_fact:
+    loki_archive_src: /tmp
+
+# TODO clean up temporary files later?

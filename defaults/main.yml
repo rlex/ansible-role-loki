@@ -45,3 +45,5 @@ loki_chunk_store_config:
 loki_table_manager:
   retention_deletes_enabled: false
   retention_period: 0s
+
+loki_distribute_binaries_via_localhost: true
